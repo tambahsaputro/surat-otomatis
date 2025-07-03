@@ -34,7 +34,8 @@ app.post('/generate', async (req, res) => {
   const rawTemplate = fs.readFileSync(templatePath, 'utf8');
   const filledHTML = renderHTML(rawTemplate, { nama, alamat, keperluan, tanggal });
 
-  const filename = `${slug}_${nama.replace(/\s+/g, '_')}.pdf`;
+  const safeNama = nama.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+  const filename = `${slug}_${safeNama}.pdf`;
   const pdfPath = path.join(outputDir, filename);
 
   try {
